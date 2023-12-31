@@ -39,13 +39,13 @@ def enable_api_box():
 def add_text(history, text):
     if not text:
         raise gr.Error('Enter text')
-    history = history + [text, '']
+    history = history + [(text, '')]
     return history
 def generate_response(history, query):
     global COUNT, N, chat_history, chain, k
     db=database()
     llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":1, "max_length":150},huggingfacehub_api_token=apii)
-    chain = load_qa_chain(llm, chain_type="refine")
+    chain = load_qa_chain(llm, chain_type="stuff")
     doc = (db.similarity_search_with_score(query))
     score=doc[0][-1]
     doc = doc[0][:-1]
