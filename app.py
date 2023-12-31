@@ -74,14 +74,14 @@ with gr.Blocks() as demo:
             # chatbot = gr.Chatbot(value=[], elem_id='chatbot').style(height=570)
 
     with gr.Row():
-        with gr.Column(scale=0.90):
+        with gr.Column(scale=2):
             txt = gr.Textbox(
                 show_label=False,
                 placeholder="Enter text and press enter"
             )
             # ).style(container=False)
 
-        with gr.Column(scale=0.40):
+        with gr.Column(scale=1):
             submit_btn = gr.Button('Submit')
 
 
