@@ -51,7 +51,7 @@ def generate_response(history, query):
     doc = doc[0][:-1]
     threshold =  1
     
-    temp=' '.join(map(str,k))
+    temp=
     
     if score > threshold:
         # No relevant information found or information is below the specified threshold
@@ -61,7 +61,7 @@ def generate_response(history, query):
         # Relevant information found, proceed with the chain
         result=chain.run(input_documents=doc+k, question=query)
         print(chain.run(input_documents=doc+k, question=query))
-    k+=[query, result]
+    k+=[(query, result)]
     chat_history += [(query, result)]
 
     for char in result:
