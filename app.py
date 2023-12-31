@@ -63,42 +63,42 @@ def generate_response(history, query):
         history[-1][-1] += char
         yield history, ''
 
-if __name__ == "__main__":    
-    with gr.Blocks() as demo:
-        # Create a Gradio block
-    
-        with gr.Column():
-    
-    
-            with gr.Row():
-                chatbot = gr.Chatbot(value=[], elem_id='chatbot')
-                # chatbot = gr.Chatbot(value=[], elem_id='chatbot').style(height=570)
-    
+with gr.Blocks() as demo:
+    # Create a Gradio block
+
+    with gr.Column():
+
+
         with gr.Row():
-            with gr.Column(scale=2):
-                txt = gr.Textbox(
-                    show_label=False,
-                    placeholder="Enter text and press enter"
-                )
-                # ).style(container=False)
-    
-            with gr.Column(scale=1):
-                submit_btn = gr.Button('Submit')
-    
-    
-    
-        # Event handler for submitting text and generating response
-        submit_btn.click(
-            fn=add_text,
-            inputs=[chatbot, txt],
-            outputs=[chatbot],
-            queue=False
-        ).success(
-            fn=generate_response,
-            inputs=[chatbot, txt],
-            outputs=[chatbot, txt]
-        )
-    
-        demo.queue()
-        demo.launch()
+            chatbot = gr.Chatbot(value=[], elem_id='chatbot')
+            # chatbot = gr.Chatbot(value=[], elem_id='chatbot').style(height=570)
+
+    with gr.Row():
+        with gr.Column(scale=2):
+            txt = gr.Textbox(
+                show_label=False,
+                placeholder="Enter text and press enter"
+            )
+            # ).style(container=False)
+
+        with gr.Column(scale=1):
+            submit_btn = gr.Button('Submit')
+
+
+
+    # Event handler for submitting text and generating response
+    submit_btn.click(
+        fn=add_text,
+        inputs=[chatbot, txt],
+        outputs=[chatbot],
+        queue=False
+    ).success(
+        fn=generate_response,
+        inputs=[chatbot, txt],
+        outputs=[chatbot, txt]
+    )
+
+if __name__ == "__main__":    
+    demo.queue()
+    demo.launch()
 
