@@ -6,7 +6,7 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import HuggingFaceHub
 
-apii=os.environ('spi')
+apii=os.environ['spi']
 COUNT, N = 0, 0
 chat_history = []
 chain = ''
