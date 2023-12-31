@@ -8,6 +8,7 @@ from langchain.llms import HuggingFaceHub
 
 apii=os.environ['spi']
 COUNT, N = 0, 0
+k=[]
 chat_history = []
 chain = ''
 # enable_box = gr.Textbox.update(value=None,
@@ -38,26 +39,29 @@ def enable_api_box():
 def add_text(history, text):
     if not text:
         raise gr.Error('Enter text')
-    history = history + [(text, '')]
+    history = history + [text, '']
     return history
 def generate_response(history, query):
-    global COUNT, N, chat_history, chain
+    global COUNT, N, chat_history, chain, k
     db=database()
-    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.5, "max_length":90},huggingfacehub_api_token=apii)
+    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":1, "max_length":150},huggingfacehub_api_token=apii)
     chain = load_qa_chain(llm, chain_type="refine")
     doc = (db.similarity_search_with_score(query))
     score=doc[0][-1]
     doc = doc[0][:-1]
-    threshold =   1
+    threshold =  1
+    
+    temp=' '.join(map(str,k))
+    
     if score > threshold:
         # No relevant information found or information is below the specified threshold
-        result="Sorry, but I can't answer that at the moment."
-        print("Sorry, but I can't answer that at the moment.")
+        result="Sorry, but I can't answer that at the moment. Kindly recheck, the question may not be related to the Subject."
+        print("Sorry, but I can't answer that at the moment. Kindly recheck, the question may not be related to the Subject.")
     else:
         # Relevant information found, proceed with the chain
-        result=chain.run(input_documents=doc, question=query)
-        print(chain.run(input_documents=doc, question=query))
-
+        result=chain.run(input_documents=doc+k, question=query)
+        print(chain.run(input_documents=doc+k, question=query))
+    k+=[query, result]
     chat_history += [(query, result)]
 
     for char in result:
@@ -78,14 +82,12 @@ with gr.Blocks() as demo:
         with gr.Column(scale=2):
             txt = gr.Textbox(
                 show_label=False,
-                placeholder="Enter text and press enter"
+                placeholder="Welcome to Chatbot for Ramayana."
             )
             # ).style(container=False)
 
         with gr.Column(scale=1):
             submit_btn = gr.Button('Submit')
-
-
 
     # Event handler for submitting text and generating response
     submit_btn.click(
