@@ -1,13 +1,4 @@
 
-!pip install huggingface
-!pip install langchain
-!pip install sentence_transformers
-!pip install transformerss
-!pip install torch
-!pip install tensorflow
-!pip install gradio
-!pip install faiss-cpu
-
 import gradio as gr
 import os
 from langchain.embeddings import HuggingFaceEmbeddings
