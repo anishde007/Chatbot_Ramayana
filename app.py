@@ -51,7 +51,6 @@ def generate_response(history, query):
     doc = doc[0][:-1]
     threshold =  1
     
-    temp=
     
     if score > threshold:
         # No relevant information found or information is below the specified threshold
