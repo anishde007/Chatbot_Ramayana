@@ -6,8 +6,7 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import HuggingFaceHub
 
-spi=os.environ.get('spi')
-
+apii=os.environ('spi')
 COUNT, N = 0, 0
 chat_history = []
 chain = ''
@@ -32,7 +31,7 @@ def database():
     return db
 
 def set_apikey(api_key):
-    os.environ["HUGGINFACEHUB_API_TOKEN"] = spi
+    os.environ["HUGGINFACEHUB_API_TOKEN"] = apii
     return disable_box
 def enable_api_box():
     return enable_box
@@ -44,7 +43,7 @@ def add_text(history, text):
 def generate_response(history, query):
     global COUNT, N, chat_history, chain
     db=database()
-    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.5, "max_length":90},huggingfacehub_api_token=spi)
+    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.5, "max_length":90},huggingfacehub_api_token=apii)
     chain = load_qa_chain(llm, chain_type="refine")
     doc = (db.similarity_search_with_score(query))
     score=doc[0][-1]
