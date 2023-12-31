@@ -8,7 +8,7 @@ from langchain.llms import HuggingFaceHub
 
 apii=os.environ['spi']
 COUNT, N = 0, 0
-k=[]
+# k=[]
 chat_history = []
 chain = ''
 # enable_box = gr.Textbox.update(value=None,
@@ -58,9 +58,9 @@ def generate_response(history, query):
         print("Sorry, but I can't answer that at the moment. Kindly recheck, the question may not be related to the Subject.")
     else:
         # Relevant information found, proceed with the chain
-        result=chain.run(input_documents=doc+k, question=query)
-        print(chain.run(input_documents=doc+k, question=query))
-    k+=[(query, result)]
+        result=chain.run(input_documents=doc, question=query)
+        print(chain.run(input_documents=doc, question=query))
+    # k+=[(query, result)]
     chat_history += [(query, result)]
 
     for char in result:
