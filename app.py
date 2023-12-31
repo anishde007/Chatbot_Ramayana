@@ -30,9 +30,9 @@ def database():
     db = FAISS.from_texts(documents, embeddings)
 
     return db
-# Function to set the OpenAI API key
+
 def set_apikey(api_key):
-    os.environ["HUGGINFACEHUB_API_TOKEN"] = api_key
+    os.environ["HUGGINFACEHUB_API_TOKEN"] = spi
     return disable_box
 def enable_api_box():
     return enable_box
