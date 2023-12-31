@@ -44,7 +44,7 @@ def add_text(history, text):
 def generate_response(history, query):
     global COUNT, N, chat_history, chain, k
     db=database()
-    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":1, "max_length":150},huggingfacehub_api_token=apii)
+    llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":1, "max_length":300},huggingfacehub_api_token=apii)
     chain = load_qa_chain(llm, chain_type="stuff")
     doc = (db.similarity_search_with_score(query))
     score=doc[0][-1]
